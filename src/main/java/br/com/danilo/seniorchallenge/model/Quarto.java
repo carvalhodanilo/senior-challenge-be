@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pessoa {
+public class Quarto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +19,12 @@ public class Pessoa {
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "cpf")
-    private String cpf;
+    @Column(name = "preco")
+    private Long preco;
 
-    @Column(name = "telefone")
-    private String telefone;
+    @Column(name = "imagem")
+    private String imagem;
+
+    @Column(name = "locado")
+    private boolean locado;
 }
