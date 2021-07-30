@@ -28,7 +28,6 @@ public class QuartoController {
             if (quartos.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            System.out.println("OI");
             return new ResponseEntity<>(quartos, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

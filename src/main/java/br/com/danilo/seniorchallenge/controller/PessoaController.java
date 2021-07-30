@@ -31,8 +31,6 @@ public class PessoaController {
             var p = nome.isPresent() ? nome.get() : "";
             var p2 = cpf.isPresent() ? cpf.get() : "";
 
-            System.out.println(p);
-            System.out.println(p2);
             var pessoas = pessoaService
                     .getByFilterAndPage(nome.isPresent() ? nome.get() : "",
                                         cpf.isPresent() ? cpf.get() : "",
