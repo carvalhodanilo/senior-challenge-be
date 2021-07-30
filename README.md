@@ -8,8 +8,20 @@ Montar imagem do banco:
 Subir aplicação:
 >mvn spring-boot:run
 
-Cadastrar quartos para utilizar no sistema:
+Cadastrar quartos para utilizar no sistema (ainda não possui tela de cadastro de quartos):
 Método: POST
 Ncessário: autenticação: NÂO
 endpoint: http://localhost:8080/api/quartos
-json exemplo:   { "nome": "116", "preco": 120.00, "imagem": "555", "locado": false }
+json exemplo:   { "nome": "xx", "preco": 120.00, "imagem": "555", "locado": false }
+
+
+#API segue padrões REST
+
+url base: 'http://localhost:8080/api'
+CRUDS da aplicação
+Pessoa: '/pessoas'
+Quarto: '/quartos'
+Movimentação: '/movimentacao'
+
+Chamadas da API sempre na raiz (ex. 'http://localhost:8080/api/pessoas' )
+
