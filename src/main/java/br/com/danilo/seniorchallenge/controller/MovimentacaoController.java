@@ -77,10 +77,14 @@ public class MovimentacaoController {
     }
 
     @PutMapping("/movimentacoes/{id}")
-    public ResponseEntity<MovimentacaoDTO> updateMovimentacao(@PathVariable("id") Long id, @RequestBody Movimentacao movimentacao) {
+    public ResponseEntity<MovimentacaoDTO> checkOutMovimento(@PathVariable("id") Long id, @RequestBody Movimentacao movimentacao) {
         try {
             Optional<Movimentacao> dadosQuarto = movimentacaoService.findById(id);
-            System.out.println(id);
+
+            var q = movimentacao.getQuarto();
+            q.setLocado(false);
+            quartoService.save(q);
+
             if (dadosQuarto.isPresent()) {
                 dadosQuarto.get().setId(movimentacao.getId());
                 dadosQuarto.get().setPessoa(movimentacao.getPessoa());
@@ -90,7 +94,7 @@ public class MovimentacaoController {
                 dadosQuarto.get().setSaida(movimentacao.getSaida());
                 dadosQuarto.get().setGaragem(movimentacao.isGaragem());
 
-                return new ResponseEntity<>(MovimentacaoDTO.converter(movimentacaoService.save(movimentacao)), HttpStatus.OK);
+                return new ResponseEntity<>(MovimentacaoDTO.converter(movimentacaoService.saveAndFlush(movimentacao)), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

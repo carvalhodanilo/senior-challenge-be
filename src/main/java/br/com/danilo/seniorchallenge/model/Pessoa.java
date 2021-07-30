@@ -1,5 +1,6 @@
 package br.com.danilo.seniorchallenge.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,6 @@ public class Pessoa {
     private String telefone;
 
     @OneToMany( mappedBy = "pessoa" )
+    @JsonIgnore
     private List<Movimentacao> movimentacoes = new ArrayList<>();
 }

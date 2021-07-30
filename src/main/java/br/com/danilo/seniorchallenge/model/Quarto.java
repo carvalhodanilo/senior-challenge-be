@@ -1,5 +1,6 @@
 package br.com.danilo.seniorchallenge.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,5 +32,6 @@ public class Quarto {
     private boolean locado;
 
     @OneToMany( mappedBy = "quarto" )
+    @JsonIgnore
     private List<Movimentacao> movimentacoes = new ArrayList<>();
 }
