@@ -7,12 +7,14 @@ import br.com.danilo.seniorchallenge.service.PessoaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -22,7 +24,7 @@ public class PessoaController {
     PessoaService pessoaService;
 
     @GetMapping("/pessoas")
-    public ResponseEntity<Page<Pessoa>> getByFilterAndPage(Pageable page,
+    public ResponseEntity<Page<PessoaDTO>> getByFilterAndPage(Pageable page,
                                                            @RequestParam(required = false) Optional<String> nome,
                                                            @RequestParam(required = false) Optional<String> cpf) {
         try {
@@ -36,14 +38,18 @@ public class PessoaController {
                                         cpf.isPresent() ? cpf.get() : "",
                                         page);
 
+            var pessoasDTO  = new PageImpl<>(pessoas
+                    .stream()
+                    .map(person -> PessoaDTO.converter(person))
+                    .collect(Collectors.toList()), page, pessoas.getTotalElements());
 
-            System.out.println(pessoas.getTotalElements());
             if (pessoas.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            return new ResponseEntity<>(pessoas, HttpStatus.OK);
+            return new ResponseEntity<>(pessoasDTO, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

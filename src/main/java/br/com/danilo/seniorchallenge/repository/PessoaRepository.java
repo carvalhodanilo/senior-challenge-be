@@ -1,6 +1,7 @@
 package br.com.danilo.seniorchallenge.repository;
 
 import br.com.danilo.seniorchallenge.model.Pessoa;
+import br.com.danilo.seniorchallenge.model.PessoaDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
