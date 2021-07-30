@@ -63,18 +63,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.flywaydb</groupId>
-				<artifactId>flyway-maven-plugin</artifactId>
-				<version>7.11.3</version>
-				<configuration>
-					<url>jdbc:postgresql://localhost:5432/dbsenior</url>
-					<user>postgres</user>
-					<password>9999</password>
-					<schemas>public</schemas>
-					<locations>filesystem:src/main/resources/db/migration/</locations>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
