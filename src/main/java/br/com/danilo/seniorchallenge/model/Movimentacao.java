@@ -1,5 +1,6 @@
 package br.com.danilo.seniorchallenge.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,11 @@ public class Movimentacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.LAZY, cascade=CascadeType.MERGE )
     @JoinColumn(name = "ID_QUARTO", referencedColumnName = "ID")
     private Quarto quarto;
 
-    @ManyToOne(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.LAZY, cascade=CascadeType.MERGE )
     @JoinColumn(name = "ID_HOSPEDE", referencedColumnName = "ID")
     private Pessoa pessoa;
 
@@ -36,6 +37,9 @@ public class Movimentacao {
 
     @Column(name = "closed")
     private boolean closed;
+
+    @Column(name = "valorTotal")
+    private Long valorTotal;
 
 
 }

@@ -60,6 +60,7 @@ public class MovimentacaoController {
             movimentacaoService.saveAndFlush(movimentacao);
             return new ResponseEntity<>(MovimentacaoDTO.converter(movimentacao), HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -77,18 +78,26 @@ public class MovimentacaoController {
 
     @PutMapping("/movimentacoes/{id}")
     public ResponseEntity<MovimentacaoDTO> updateMovimentacao(@PathVariable("id") Long id, @RequestBody Movimentacao movimentacao) {
-        Optional<Movimentacao> dadosQuarto = movimentacaoService.findById(id);
+        try {
+            Optional<Movimentacao> dadosQuarto = movimentacaoService.findById(id);
+            System.out.println(id);
+            if (dadosQuarto.isPresent()) {
+                dadosQuarto.get().setId(movimentacao.getId());
+                dadosQuarto.get().setPessoa(movimentacao.getPessoa());
+                dadosQuarto.get().setQuarto(movimentacao.getQuarto());
+                dadosQuarto.get().setEntrada(movimentacao.getEntrada());
+                dadosQuarto.get().setClosed(movimentacao.isClosed());
+                dadosQuarto.get().setSaida(movimentacao.getSaida());
+                dadosQuarto.get().setGaragem(movimentacao.isGaragem());
 
-        if (dadosQuarto.isPresent()) {
-            var m = new Movimentacao();
-            m.setPessoa(movimentacao.getPessoa());
-            m.setQuarto(movimentacao.getQuarto());
-            m.setEntrada(movimentacao.getEntrada());
-            m.setClosed(false);
+                return new ResponseEntity<>(MovimentacaoDTO.converter(movimentacaoService.save(movimentacao)), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
-            return new ResponseEntity<>(MovimentacaoDTO.converter(movimentacaoService.save(m)), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -27,4 +29,7 @@ public class Quarto {
 
     @Column(name = "locado")
     private boolean locado;
+
+    @OneToMany( mappedBy = "quarto" )
+    private List<Movimentacao> movimentacoes = new ArrayList<>();
 }

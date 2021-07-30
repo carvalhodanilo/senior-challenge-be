@@ -29,6 +29,7 @@ public class MovimentacaoDTO {
 
     public static MovimentacaoDTO converter(Movimentacao movimentacao){
         var m = new MovimentacaoDTO();
+        m.setId(movimentacao.getId());
         m.setPessoa(new PessoaDTO(movimentacao.getPessoa().getId(),
                                   movimentacao.getPessoa().getNome(),
                                   movimentacao.getPessoa().getCpf(),
@@ -42,7 +43,8 @@ public class MovimentacaoDTO {
         m.setEntrada(movimentacao.getEntrada());
         m.setClosed(movimentacao.isClosed());
         m.setGaragem(movimentacao.isGaragem());
-        m.setValorTotal(m.calcularValorAtual(m.countDaysBetween(movimentacao.getEntrada(), new Date())));
+        m.setSaida(movimentacao.getSaida());
+        m.setValorTotal(movimentacao.isClosed()? movimentacao.getValorTotal() : m.calcularValorAtual(m.countDaysBetween(movimentacao.getEntrada(), new Date())));
         return m;
     }
 

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -24,4 +26,7 @@ public class Pessoa {
 
     @Column(name = "telefone")
     private String telefone;
+
+    @OneToMany( mappedBy = "pessoa" )
+    private List<Movimentacao> movimentacoes = new ArrayList<>();
 }
